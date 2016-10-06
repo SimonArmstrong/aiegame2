@@ -31,13 +31,28 @@ public class GLTerrain {
     public Mesh mesh;
     public Material mat;
 
-    public static void Generate(ref GLTerrain terrain, Texture2D heightMap) {
+    public static float offset = 0;
+
+    public class GLTri {
+        public Vector3[] verts = new Vector3[3];
+    }
+
+    public static void Generate(ref GLTerrain terrain, Texture2D heightMap, float amplitude) {
+
+        //offset++;
+        if (terrain.mesh != null) terrain.mesh.Clear();
+        terrain.mesh = new Mesh();
+        terrain.mesh.MarkDynamic();
+
+        terrain.triangleIndex = 0;
+        terrain.verts.Clear();
 
         terrain.triangles = new int[(terrain.w-1)*(terrain.h-1)*6];
         int h = 0;
         for (int i = 0; i < terrain.w; i++) {
             for (int j = 0; j < terrain.h; j++) {
-                terrain.verts.Add(new Vector3(i, heightMap.GetPixel(i, j).grayscale * 10, j));
+                terrain.verts.Add(new Vector3(i, heightMap.GetPixel(i + (int)offset, j + (int)offset / 2).grayscale * amplitude, j));
+                //terrain.normals.Add(-Vector3.up);
                 //terrain.normals.Add(new Vector3(i, Mathf.PerlinNoise(i, j), j));
                 //terrain.normals.Add(new Vector3(i, Mathf.PerlinNoise(i, j), j));
                 //terrain.uvs.Add(new Vector3(i, 0, j));
@@ -49,16 +64,15 @@ public class GLTerrain {
                 h++;
             }
         }
-
-        terrain.mesh = new Mesh();
-
         terrain.mesh.vertices = terrain.verts.ToArray();
-        //terrain.mesh.normals = terrain.normals.ToArray();
-        terrain.mesh.uv = terrain.uvs.ToArray();
+
+        terrain.normals.AddRange(terrain.mesh.normals);
+
+        terrain.mesh.normals = terrain.normals.ToArray();
         terrain.mesh.triangles = terrain.triangles;
-        terrain.mesh.SetNormals(terrain.verts);
         terrain.mesh.RecalculateNormals();
-        terrain.mat = Resources.Load<Material>("default");
+        terrain.mesh.uv = terrain.uvs.ToArray();
+        if (!terrain.mat) terrain.mat = Resources.Load<Material>("default");
     }
 
     public void AddTriangles(int a, int b, int c) {
