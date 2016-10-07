@@ -3,17 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 
 [System.Serializable]
-public class GLTerrain {
+public class GLTerrainTest
+{
 
     [System.Serializable]
-    public class Octave {
+    public class Octave
+    {
         public float x, y;
         [HideInInspector]
         public float pNoise;
         public float persitence;
         public float lacinarity;
 
-        public Octave() {
+        public Octave()
+        {
             this.x = Mathf.Pow(x, lacinarity);
             this.y = Mathf.Pow(y, lacinarity);
             this.pNoise = Mathf.PerlinNoise(this.x, this.y);
@@ -33,25 +36,31 @@ public class GLTerrain {
     public Material mat;
 
     public static float offset = 0;
-    public class GLVert {
+    public class GLVert
+    {
         public int id;
         public Vector3 position;
 
-        public static implicit operator Vector3(GLVert gv) {
+        public static implicit operator Vector3(GLVert gv)
+        {
             return gv.position;
         }
 
-        public GLVert(Vector3 position, int id) {
+        public GLVert(Vector3 position, int id)
+        {
             this.position = position;
             this.id = id;
         }
     }
 
-    public class GLTri {
+    public class GLTri
+    {
         public Vector3[] verts = new Vector3[3];
 
-        GLTri(Vector3[] verts) {
-            if (verts.Length > 3) {
+        GLTri(Vector3[] verts)
+        {
+            if (verts.Length > 3)
+            {
                 Debug.LogError("The vertices for Triangle " + this + " has too many verts!");
                 return;
             }
@@ -61,7 +70,8 @@ public class GLTerrain {
     }
 
 
-    public static void Generate(ref GLTerrain terrain, Texture2D heightMap, float amplitude) {
+    public static void Generate(ref GLTerrainTest terrain, Texture2D heightMap, float amplitude)
+    {
 
         //offset++;
         if (terrain.mesh != null) terrain.mesh.Clear();
@@ -72,10 +82,12 @@ public class GLTerrain {
         terrain.vertPositions.Clear();
         terrain.verts.Clear();
 
-        terrain.triangles = new int[(terrain.w-1)*(terrain.h-1)*6];
+        terrain.triangles = new int[(terrain.w - 1) * (terrain.h - 1) * 6];
         int h = 0;
-        for (int x = 0; x < terrain.w; x++) {
-            for (int y = 0; y < terrain.h; y++) {
+        for (int x = 0; x < terrain.w; x++)
+        {
+            for (int y = 0; y < terrain.h; y++)
+            {
                 terrain.vertPositions.Add(new Vector3(x, heightMap.GetPixel(x + (int)offset, y + (int)offset / 2).grayscale * amplitude, y));
 
                 if ((x > 0 && y > 0) && (x < terrain.w && y < terrain.h))
@@ -121,13 +133,15 @@ public class GLTerrain {
         if (!terrain.mat) terrain.mat = Resources.Load<Material>("default");
     }
 
-    public void AddTriangles(int a, int b, int c) {
-        triangles[triangleIndex]     = a;
+    public void AddTriangles(int a, int b, int c)
+    {
+        triangles[triangleIndex] = a;
         triangles[triangleIndex + 1] = b;
         triangles[triangleIndex + 2] = c;
         triangleIndex += 3;
     }
 
-    public void Draw() {
+    public void Draw()
+    {
     }
 }

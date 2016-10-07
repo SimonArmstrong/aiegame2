@@ -71,6 +71,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\FlyCam.cs" />
     <Compile Include="Assets\Scripts\GLTerrain.cs" />
+    <Compile Include="Assets\Scripts\GLTerrainTest.cs" />
     <Compile Include="Assets\Scripts\HeightMapPainter.cs" />
     <Compile Include="Assets\Scripts\MeshTest.cs" />
     <Compile Include="Assets\Scripts\TerrainGenerator.cs" />

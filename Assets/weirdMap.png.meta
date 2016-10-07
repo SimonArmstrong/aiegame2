@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: bdb43c28eb81ac149a74929d11169d12
-timeCreated: 1475731208
+guid: f65d006eec81a8542a133ddc7d9e941e
+timeCreated: 1475793199
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName: {}
@@ -8,7 +8,7 @@ TextureImporter:
   mipmaps:
     mipMapMode: 0
     enableMipMap: 1
-    linearTexture: 0
+    linearTexture: 1
     correctGamma: 0
     fadeOut: 0
     borderMipMap: 0
@@ -48,12 +48,7 @@ TextureImporter:
   alphaIsTransparency: 0
   spriteTessellationDetail: -1
   textureType: 5
-  buildTargetSettings:
-  - buildTarget: Standalone
-    maxTextureSize: 1024
-    textureFormat: 10
-    compressionQuality: 50
-    allowsAlphaSplitting: 0
+  buildTargetSettings: []
   spriteSheet:
     serializedVersion: 2
     sprites: []
